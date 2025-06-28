@@ -1,37 +1,48 @@
 {
   "expo": {
-    "name": "interfocus-todolist",
+    "name": "Interfocus",
     "slug": "interfocus-todolist",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "interfocustodolist",
+    "icon": "./assets/images/store/icon.png",
+    "scheme": "interfocus-todolist",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "br.com.interfocus.todolist",
+      "icon": {
+        "dark": "./assets/images/store/ios-dark.png",
+        "light": "./assets/images/store/ios-light.png",
+        "tinted": "./assets/images/store/ios-tinted.png"
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/store/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "br.com.interfocus.todolist"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/store/favicon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/store/splash-icon-light.png",
+          "backgroundColor": "#ffffff",
+          "dark": {
+            "image": "./assets/images/store/splash-icon-dark.png",
+            "backgroundColor": "#000000"
+          },
           "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "resizeMode": "contain"
         }
       ]
     ],
