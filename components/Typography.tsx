@@ -7,16 +7,20 @@ import {
 
 type TypographyProps = 
 	UnistylesVariants<typeof styles> &
+	React.ComponentProps<typeof Text> &
 	PropsWithChildren;
 
 export function Typography({ 
-	children, 
+	children,
+	style,
 	...props 
 }: TypographyProps) {
-	styles.useVariants(props);
+	styles.useVariants({
+		size: props.size
+	});
 
 	return (
-		<Text style={styles.text}>
+		<Text style={[styles.text, style]} {...props}>
 			{children}
 		</Text>
 	);
@@ -24,14 +28,30 @@ export function Typography({
 
 const styles = StyleSheet.create((theme) => ({
 	text: {
+		color: theme.colors.onBackground,
 		variants: {
 			size: {
 				title: {
-					color: theme.colors.barbie,
+					fontSize: theme.fonts.xl,
+					fontFamily: 'Rubik-SemiBold',
 				},
-				subtitle: {},
-				default: {}
-			}
+				subtitle: {
+					fontSize: theme.fonts.lg,
+					fontFamily: 'Rubik-Medium',
+				},
+				label: {
+					fontSize: theme.fonts.sm,
+					fontFamily: 'Rubik-Regular'
+				},
+				mini: {
+					fontSize: theme.fonts.xs,
+					fontFamily: 'Rubik-Regular'
+				},
+				default: {
+					fontSize: theme.fonts.md,
+					fontFamily: 'Rubik-Regular'
+				}
+			},
 		}
 	}
 }));

@@ -1,10 +1,11 @@
+import { ToastAndroid } from 'react-native';
 import { use, createContext, type PropsWithChildren, useEffect } from 'react';
+import { AuthSessionResult, useAuthRequest } from 'expo-auth-session';
 import { useStorageState } from '@/hooks/useStorageState';
 import { getOAuthConfig } from '@/services/oauth/config';
-import { AuthSessionResult, useAuthRequest } from 'expo-auth-session';
-import type { AuthContextType } from './types';
 import { getOAuthToken } from '@/services/api/token';
-import { ToastAndroid } from 'react-native';
+import useProfileStore from '@/stores/useProfileStore';
+import type { AuthContextType } from './types';
 
 const AuthContext = createContext<AuthContextType>({
   signIn: () => null,
@@ -17,6 +18,7 @@ const AuthContext = createContext<AuthContextType>({
 
 export function SessionProvider({ children }: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState('session');
+  const setProfile = useProfileStore(s => s.setProfile);
   const [config, discovery] = getOAuthConfig();
 	const isLoggedIn = !!session;
 	
@@ -25,7 +27,6 @@ export function SessionProvider({ children }: PropsWithChildren) {
  
 	const signIn = () => {
     promptAsync();
-    setSession('xxx');
 	}
 
 	const signOut = () => {
@@ -40,6 +41,12 @@ export function SessionProvider({ children }: PropsWithChildren) {
       }
       // Armazena o token no expo-secure-store
       setSession(response.access_token || response.token);
+      setProfile({
+        login: response.login || '',
+        userId: response.usuarioId || 0,
+        name: response.usuarioNome || ''
+      })
+
       ToastAndroid.show('Login realizado com sucesso!', ToastAndroid.SHORT)
 
     } catch (error) {

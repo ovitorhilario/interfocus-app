@@ -14,9 +14,13 @@ export async function getOAuthToken(
   const clientSecret = process.env.EXPO_PUBLIC_OAUTH_CLIENT_SECRET || '';
 
   // Preparando o corpo (Body) como 'application/x-www-form-urlencoded'
-  const bodyParams = new URLSearchParams();
-  bodyParams.append('grant_type', 'authorization_code');
-  bodyParams.append('code', authorizationCode);
+	const data: Record<string, string> = {
+		'grant_type': 'authorization_code',
+		'code': authorizationCode,
+	}
+	const formBody = Object.keys(data)
+    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&');
 
   // Preparando o cabeçalho de autorização 'Basic Auth'
   const credentials = `${clientId}:${clientSecret}`;
@@ -30,7 +34,7 @@ export async function getOAuthToken(
         'Authorization': authorizationHeader,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: bodyParams,
+      body: formBody,
     });
 
     if (!response.ok) {
