@@ -4,8 +4,6 @@ Um aplicativo de lista de tarefas desenvolvido em React Native com autenticaçã
 
 ## 📱 Sobre o Projeto
 
-![Diagram](/readme/diagram.jpg)
-
 Desenvolvi este aplicativo como parte do processo seletivo da Interfocus. É uma solução completa de gerenciamento de tarefas que permite aos usuários:
 
 - Fazer login seguro através do sistema de autenticação OAuth 2.0 da Interfocus (IAS)
@@ -14,6 +12,9 @@ Desenvolvi este aplicativo como parte do processo seletivo da Interfocus. É uma
 - Interface responsiva com suporte a tema claro e escuro
 - Seleção múltipla de tarefas para ações em lote
 - Persistência local dos dados com alta performance
+
+![Diagram](/readme/diagram.jpg)
+
 
 ## 🎨 Ícones e Assets
 Desenvolvi ícones personalizados e splash screen para uma experiência completa:
