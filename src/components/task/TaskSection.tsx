@@ -59,7 +59,7 @@ export function TaskSection({
 					/>
 				)}
 				showsVerticalScrollIndicator={false}
-				contentContainerStyle={{ gap: 8 }}
+				contentContainerStyle={styles.contentContainer}
 				ListEmptyComponent={() => (
 					<View style={styles.emptyContainer}>
 						<Typography size='sm'>Nenhuma tarefa encontrada.</Typography>
@@ -70,7 +70,7 @@ export function TaskSection({
 	);
 }
 
-const styles = StyleSheet.create((theme) => ({
+const styles = StyleSheet.create((theme, rt) => ({
 	section: {
 		marginTop: theme.gap(2),
 		paddingVertical: theme.gap(3),
@@ -84,5 +84,9 @@ const styles = StyleSheet.create((theme) => ({
 		backgroundColor: theme.colors.muted,
 		borderRadius: 16,
 		marginTop: theme.gap(2),
+	},
+	contentContainer: {
+		gap: theme.gap(1),
+		paddingBottom: rt.insets.bottom + 400, // Adjust for bottom inset
 	}
 }));
