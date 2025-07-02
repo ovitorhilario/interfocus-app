@@ -4,7 +4,7 @@
     "slug": "interfocus-todolist",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/store/icon.png",
+    "icon": "./src/assets/images/store/icon.png",
     "scheme": "interfocus-todolist",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -12,14 +12,14 @@
       "supportsTablet": true,
       "bundleIdentifier": "br.com.interfocus.todolist",
       "icon": {
-        "dark": "./assets/images/store/ios-dark.png",
-        "light": "./assets/images/store/ios-light.png",
-        "tinted": "./assets/images/store/ios-tinted.png"
+        "dark": "./src/assets/images/store/ios-dark.png",
+        "light": "./src/assets/images/store/ios-light.png",
+        "tinted": "./src/assets/images/store/ios-tinted.png"
       }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/store/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/store/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
@@ -28,25 +28,37 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/store/favicon.png"
+      "favicon": "./src/assets/images/store/favicon.png"
     },
     "plugins": [
       "expo-router",
       "expo-secure-store",
-      "expo-font",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./src/assets/fonts/Rubik-Bold.ttf",
+            "./src/assets/fonts/Rubik-Light.ttf",
+            "./src/assets/fonts/Rubik-Medium.ttf",
+            "./src/assets/fonts/Rubik-Regular.ttf",
+            "./src/assets/fonts/Rubik-SemiBold.ttf"
+          ]
+        }
+      ],
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/store/splash-icon-light.png",
+          "image": "./src/assets/images/store/splash-icon-light.png",
           "backgroundColor": "#ffffff",
           "dark": {
-            "image": "./assets/images/store/splash-icon-dark.png",
+            "image": "./src/assets/images/store/splash-icon-dark.png",
             "backgroundColor": "#000000"
           },
           "imageWidth": 200,
           "resizeMode": "contain"
         }
-      ]
+      ],
+      "react-native-edge-to-edge"
     ],
     "experiments": {
       "typedRoutes": true
