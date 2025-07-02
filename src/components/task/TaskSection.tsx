@@ -5,6 +5,7 @@ import { TaskCard } from './TaskCard';
 import { Typography } from '../Typography';
 import { TaskFilter } from '@/types/task';
 import { isSameDay } from 'date-fns';
+import useProfileStore from '@/stores/useProfileStore';
 
 export interface TaskSectionProps {
 	filter: TaskFilter;
@@ -21,9 +22,10 @@ export function TaskSection({
 	onLongPress,
 	onPress
 }: TaskSectionProps) {
+	const profile = useProfileStore(s => s.profile);
 	const getSortedTasks = useTaskStore(s => s.getSortedTasks);
 
-	const filteredTasks = getSortedTasks('asc').filter(task => {
+	const filteredTasks = getSortedTasks(profile.userId, 'asc').filter(task => {
 		if (selectedDate && task.scheduledAt !== null) {
 			// If a date is selected, filter tasks by scheduledAt
 			if (!isSameDay(task.scheduledAt, selectedDate)) {

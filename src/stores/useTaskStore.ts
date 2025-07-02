@@ -15,7 +15,7 @@ type TaskActions = {
 	updateTask: (id: string, update: Omit<Task, 'createdAt' | 'updatedAt' | 'completedAt' | 'id'>) => void;
 	getTask: (id: string) => Task | null;
 	setHasHydrated: (value: boolean) => void;
-	getSortedTasks: (mode?: 'asc' | 'desc') => Task[];
+	getSortedTasks: (userId: number, mode?: 'asc' | 'desc') => Task[];
 	deleteTasks: (ids: string[]) => void;
 	markAsCompleted: (id: string[]) => void;
 	hasTasksInDate: (date: Date) => boolean;
@@ -52,8 +52,8 @@ const useTaskStore = create<TaskState & TaskActions>()(
 				return task;
 			},
 
-			getSortedTasks: (mode) => {
-				return get().tasks.sort((a, b) => {
+			getSortedTasks: (userId, mode) => {
+				return get().tasks.filter(t => t.userId === userId).sort((a, b) => {
 					if (mode === 'asc') {
 						return compareAsc(a.createdAt, b.createdAt);
 					}

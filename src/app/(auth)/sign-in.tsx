@@ -1,5 +1,5 @@
-import { router, Stack } from 'expo-router';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { Stack } from 'expo-router';
+import { ActivityIndicator, TouchableOpacity, View } from 'react-native';
 import { useSession } from '@/context/auth';
 import * as WebBrowser from 'expo-web-browser';
 import { StyleSheet } from 'react-native-unistyles';

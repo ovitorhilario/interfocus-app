@@ -9,6 +9,7 @@ import { Typography } from '../Typography';
 import { format, isValid } from 'date-fns';
 import Constants from '@/utils/constants';
 import { BlurView } from 'expo-blur';
+import useProfileStore from '@/stores/useProfileStore';
 
 export interface CreateTaskModalProps {
 	open: boolean;
@@ -20,6 +21,7 @@ export function CreateTaskModal({
 	onClose 
 }: CreateTaskModalProps) {
 	const { theme } = useUnistyles();
+	const profile = useProfileStore(s => s.profile);
 
 	// form (create)
 	const [title, setTitle] = useState('');
@@ -66,7 +68,7 @@ export function CreateTaskModal({
 			title,
 			description,
 			colorId,
-			userId: 1,
+			userId: profile.userId,
 			scheduledAt: isScheduled ? date : null,
 		});
 		onClose();

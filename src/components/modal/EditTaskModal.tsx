@@ -9,6 +9,7 @@ import { Typography } from '../Typography';
 import { format, isValid } from 'date-fns';
 import Constants from '@/utils/constants';
 import { BlurView } from 'expo-blur';
+import useProfileStore from '@/stores/useProfileStore';
 
 export interface EditTaskModalProps {
 	edit?: string | null;
@@ -32,6 +33,7 @@ export function EditTaskModal({
 	const [showDatePicker, setShowDatePicker] = useState(false);
 	const [isScheduled, setIsScheduled] = useState(false);
 	const [error, setError] = useState<string>('');
+	const profile = useProfileStore(s => s.profile);
 
 	// (submit) function
 	const addTask = useTaskStore(s => s.addTask);
@@ -89,7 +91,7 @@ export function EditTaskModal({
 			title,
 			description,
 			colorId,
-			userId: 1,
+			userId: profile.userId,
 			scheduledAt: isScheduled ? date : null,
 		});
 		onClose();
