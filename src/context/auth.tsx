@@ -6,6 +6,8 @@ import { getOAuthConfig } from '@/services/oauth/config';
 import { getOAuthToken } from '@/services/api/token';
 import useProfileStore from '@/stores/useProfileStore';
 import type { AuthContextType } from './types';
+import useTaskStore from '@/stores/useTaskStore';
+import Constants from '@/utils/constants';
 
 const AuthContext = createContext<AuthContextType>({
   signIn: () => null,
@@ -19,6 +21,7 @@ const AuthContext = createContext<AuthContextType>({
 export function SessionProvider({ children }: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState('session');
   const setProfile = useProfileStore(s => s.setProfile);
+  const addTasks = useTaskStore(s => s.addTasks);
   const [config, discovery] = getOAuthConfig();
 	const isLoggedIn = !!session;
 	
@@ -45,7 +48,22 @@ export function SessionProvider({ children }: PropsWithChildren) {
         login: response.login || '',
         userId: response.usuarioId || 0,
         name: response.usuarioNome || ''
-      })
+      });
+
+      // Adicione 50 tarefas de exemplo
+      const usedColors = Constants.postItColors;
+      const tasks = Array.from({ length: 50 }, (_, i) => ({
+        id: `task-${i + 1}`,
+        title: `Tarefa ${i + 1}`,
+        description: `Descrição da tarefa ${i + 1}`,
+        colorId: usedColors[i % usedColors.length].id,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        completedAt: null,
+        scheduledAt: null,
+        userId: response.usuarioId || 0
+      }));
+      addTasks(tasks);
 
       ToastAndroid.show('Login realizado com sucesso!', ToastAndroid.SHORT)
 

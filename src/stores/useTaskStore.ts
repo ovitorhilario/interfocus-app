@@ -12,6 +12,7 @@ type TaskState = {
 
 type TaskActions = {
 	addTask: (task: Omit<Task, 'createdAt' | 'updatedAt' | 'completedAt' | 'id'>) => void;
+	addTasks: (tasks: Omit<Task, 'createdAt' | 'updatedAt' | 'completedAt' | 'id'>[]) => void;
 	updateTask: (id: string, update: Omit<Task, 'createdAt' | 'updatedAt' | 'completedAt' | 'id'>) => void;
 	getTask: (id: string) => Task | null;
 	setHasHydrated: (value: boolean) => void;
@@ -42,6 +43,21 @@ const useTaskStore = create<TaskState & TaskActions>()(
 					completedAt: null
 				};
 				set((s) => ({ tasks: [...s.tasks, newTask] }));
+			},
+
+			addTasks: (tasks) => {
+				const newTasks: Task[] = tasks.map((task) => ({
+					id: Crypto.randomUUID(),
+					title: task.title,
+					description: task.description,
+					userId: task.userId,
+					scheduledAt: task.scheduledAt || null,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+					colorId: task.colorId,
+					completedAt: null
+				}));
+				set((s) => ({ tasks: [...s.tasks, ...newTasks] }));
 			},
 
 			getTask: (id) => {
