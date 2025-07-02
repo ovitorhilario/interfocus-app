@@ -72,7 +72,8 @@ export function TaskSection({
 
 const styles = StyleSheet.create((theme, rt) => ({
 	section: {
-		marginTop: theme.gap(2),
+		flex: 1,
+		paddingTop: theme.gap(2),
 		paddingVertical: theme.gap(3),
 		paddingHorizontal: theme.gap(2),
 		gap: theme.gap(1),

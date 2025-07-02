@@ -1,6 +1,11 @@
 # Interfocus TodoList
 
-Um aplicativo de lista de tarefas desenvolvido em React Native com autenticação OAuth 2.0, gerenciamento de estado performático e interface moderna com suporte a tema claro/escuro.
+Aplicativo de lista de tarefas desenvolvido em React Native & Expo com autenticação OAuth 2.0, gerenciamento de estado performático e interface moderna com suporte a tema claro/escuro.
+
+- [1. Configuração do ambiente](#-configuração-do-ambiente)
+- [2. Funcionalidades](#-funcionalidades)
+- [3. Estrutura do projeto](#-estrutura-do-projeto)
+
 
 ## 📱 Sobre o Projeto
 
@@ -58,7 +63,7 @@ Desenvolvi ícones personalizados e splash screen para uma experiência completa
 
 ## 🏗️ Arquitetura e Boas Práticas
 
-### Estilização com React Native Unistyles
+### 🦄 Estilização com React Native Unistyles
 Escolhi o **React Native Unistyles** como sistema de estilização principal, que oferece:
 - **Setup extremamente simples**: Configuração minimal com máxima funcionalidade
 - **Variantes de cores**: Sistema organizado de cores com suporte automático a tema claro/escuro
@@ -66,13 +71,13 @@ Escolhi o **React Native Unistyles** como sistema de estilização principal, qu
 - **Performance**: Compilação otimizada em tempo de build
 - **Temas dinâmicos**: Alternância fluida entre light mode e dark mode
 
-### Gerenciamento de Estado e Persistência
+### ⚡ Gerenciamento de Estado e Persistência
 **Implementei MMKV + Zustand Persist** pelas seguintes razões:
 - **MMKV**: Escolhido por ser extremamente leve (~30KB), até 10x mais rápido que AsyncStorage, com sincronização instantânea e sem overhead de JSON
 - **Zustand**: Estado global simples de configurar, sem boilerplate, com excelente performance e DevTools integrado
 - **Persistência automática**: Dados salvos automaticamente sem impacto na performance
 
-### Autenticação e Segurança
+### 🔒 Autenticação e Segurança
 **Implementei uma arquitetura bem estruturada**:
 - **Context API**: Gerenciamento da sessão do usuário de forma centralizada
 - **Expo Secure Store**: Criptografia de tokens e dados sensíveis usando keychain/keystore nativo
@@ -115,7 +120,14 @@ EXPO_PUBLIC_OAUTH_CLIENT_ID=
 EXPO_PUBLIC_OAUTH_CLIENT_SECRET=
 ```
 
+
 ### Gerando build de desenvolvimento
+1. **Instale o Expo Dev Client**
+```bash
+npx expo install expo-dev-client
+```
+
+2. **Crie as pastas para sua plataforma de teste**
 ```bash
 # p/ android
 npx expo prebuild --platform android
@@ -126,6 +138,7 @@ npx expo prebuild --platform ios
 
 ### Executando no dispositivo
 - Nesse momento, certifique-se que seu dispositivo real ou virtualizado está ativo.
+> O App não é executado no Expo Go. Este é um (development build)
 ```bash
 # p/ android
 npx expo run:android
