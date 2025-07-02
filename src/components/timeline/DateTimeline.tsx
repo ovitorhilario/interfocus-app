@@ -1,24 +1,34 @@
+import { useCallback } from 'react';
 import { FlatList, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { DateItem, type IDate } from './DateItem';
+import { getTaskTimeline } from '@/utils/date';
+import useTaskStore from '@/stores/useTaskStore';
 import { isSameDay } from 'date-fns';
 
 export interface DateTimelineProps {
-	dates: IDate[];
 	selectedDate: Date;
 	onDatePress: (date: Date) => void;
 }
 
 export function DateTimeline({
-	dates,
 	selectedDate,
 	onDatePress
 }: DateTimelineProps) {
+	const hasTasksInDate = useTaskStore(s => s.hasTasksInDate);
+
+	const getDates = useCallback(() => {
+		const dates: IDate[] = getTaskTimeline().map(date => ({
+			date,
+			hasTasks: hasTasksInDate(date),
+		}));
+		return dates;
+	}, []);
 
 	return (
 		<View>
 			<FlatList
-				data={dates}
+				data={getDates()}
 				horizontal
 				showsHorizontalScrollIndicator={false}
 				contentContainerStyle={styles.list}

@@ -5,6 +5,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { ImageBackground } from 'expo-image';
 import { Typography } from '../Typography';
 import { Avatar } from '../Avatar';
+import { useSession } from '@/context/auth';
+import { useConfirmDialog } from '@/hooks/useConfirmDialog';
+import useProfileStore from '@/stores/useProfileStore';
 
 export interface ProfileModalProps {
 	open: boolean;
@@ -16,6 +19,21 @@ export function ProfileModal({
 	onClose
 }: ProfileModalProps) {
 	const { theme } = useUnistyles();
+	const { signOut } = useSession();
+	const { showDialog } = useConfirmDialog();
+	const profile = useProfileStore(s => s.profile);
+
+	function handleSignOut() {
+		const onConfirm = () => {
+			signOut();
+			onClose();
+		}
+
+		showDialog(
+			'Você tem certeza que deseja encerrar a sessão?',
+			onConfirm
+		);
+	}
 
 	return (
 		<Modal 
@@ -39,15 +57,11 @@ export function ProfileModal({
 					{/* Informações do usuário */}
 					<View>
 						<Typography>
-							Olá, <Typography weight='bold'>João</Typography>
+							Olá, <Typography weight='bold'>{profile.name}</Typography>
 						</Typography>
 
 						<Typography size='sm'>
-							login: teste@gmail.com
-						</Typography>
-						
-						<Typography size='sm'>
-							Usuário desde: <Typography weight='bold' size='sm'>01/01/2023</Typography>
+							Login: {profile.login}
 						</Typography>
 					</View>
 					
@@ -55,7 +69,7 @@ export function ProfileModal({
 					{/* Botão para encerrar a sesão */}
 					<TouchableOpacity
 						style={styles.finishButton}
-						onPress={onClose}
+						onPress={handleSignOut}
 					>
 						<Ionicons name='log-out-outline' size={24} color={theme.colors.red} />
 						<Typography style={styles.finishButtonText} weight='medium' size='sm'>

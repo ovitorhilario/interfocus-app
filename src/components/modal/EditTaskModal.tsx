@@ -70,13 +70,13 @@ export function EditTaskModal({
 	const onSubmit = async () => {
 		setError('');
 
-		if (!title.trim() || title.trim().length <= 3) {
-			setError('Título deve ter pelo menos 3 caracteres');
+		if (!title.trim()) {
+			setError('Título é obrigatório');
 			return;
 		}
 
-		if (description.trim().length <= 3) {
-			setError('Descrição deve ter pelo menos 3 caracteres');
+		if (!description.trim()) {
+			setError('Descrição é obrigatória');
 			return;
 		}
 
@@ -100,6 +100,7 @@ export function EditTaskModal({
 			visible={edit !== undefined && edit !== null} 
 			animationType='fade' 
 			transparent={true}
+			key={edit || 'edit-task-modal'}
 		>
 			<BlurView style={styles.modal} intensity={80} tint='dark'>
 				<ScrollView style={styles.scroll}>
@@ -147,14 +148,17 @@ export function EditTaskModal({
 							placeholder='Título'
 							onSubmitEditing={() => descriptionRef?.focus()}
 							returnKeyType='next'
+							key={'title-edit-task-modal'}
 						/>
 						<TextInput  
 							ref={setDescriptionRef}
 							style={[styles.input, styles.multiline]}
 							placeholder='Descrição'
+							value={description}
 							onChangeText={setDescription}
 							numberOfLines={3}	
 							multiline
+							key={'description-edit-task-modal'}
 						/>
 						{error ? (
 							<Typography style={{ color: theme.colors.error }} size='sm'>
@@ -257,13 +261,12 @@ const styles = StyleSheet.create((theme, rt) => ({
 		paddingRight: theme.gap(1),
 	},
 	backIconContainer: {
-		width: 40,
-		height: 40,
+		width: 36,
+		height: 36,
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderRadius: 20,
-		borderWidth: 1,
-		borderColor: theme.colors.accent,
+		backgroundColor: theme.colors.muted
 	},
 	input: {
 		paddingHorizontal: theme.gap(2),

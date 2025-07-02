@@ -1,4 +1,4 @@
-import { ToastAndroid } from 'react-native';
+import { Alert, ToastAndroid } from 'react-native';
 import { use, createContext, type PropsWithChildren, useEffect } from 'react';
 import { AuthSessionResult, useAuthRequest } from 'expo-auth-session';
 import { useStorageState } from '@/hooks/useStorageState';
@@ -50,7 +50,10 @@ export function SessionProvider({ children }: PropsWithChildren) {
       ToastAndroid.show('Login realizado com sucesso!', ToastAndroid.SHORT)
 
     } catch (error) {
-      ToastAndroid.show('Erro ao realizar login', ToastAndroid.SHORT);
+      Alert.alert(
+        'Erro de Autenticação',
+        'Não foi possível completar o login. Por favor, tente novamente.',
+      );
     }
   }
 

@@ -1,25 +1,25 @@
 import { TouchableOpacity, View } from 'react-native';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import useProfileStore from '@/stores/useProfileStore';
+import { Ionicons } from '@expo/vector-icons';
 import { Typography } from './Typography';
 import { Avatar } from './Avatar';
-import { Ionicons } from '@expo/vector-icons';
 
 export interface HeaderProps {
-	name: string;
 	onOpenProfile: () => void;
 }
 
 export function Header({ 
-	name,
 	onOpenProfile
 }: HeaderProps) {
 	const { theme } = useUnistyles();
+	const profile = useProfileStore(s => s.profile);
 
 	return (
 		<View style={styles.header}>
 			<View style={styles.leftSide}>
 				<Typography size="xl" weight="bold" numberOfLines={1}>
-					Olá, {name}
+					Olá, {profile.name}
 				</Typography>
 				<Typography >Suas tarefas</Typography>
 			</View>

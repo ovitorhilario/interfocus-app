@@ -5,6 +5,7 @@ const sharedColors = {
 	pastelBlue: '#4A90E2',
 	error: '#ef476f',
 	red: '#ef476f',
+	interfocus: '#0262D9',
 }
 
 const sharedTheme = {

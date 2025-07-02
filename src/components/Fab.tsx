@@ -1,23 +1,28 @@
+import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
-export interface FabProps {
+export interface FabProps extends TouchableOpacityProps {
 	onPress?: () => void;
-	disabled?: boolean;
+	icon?: React.ReactNode;
 }
 
 export function Fab({
 	onPress = () => {},
 	disabled = false,
+	icon,
+	style,
+	...props
 }: FabProps) {
 	return (
 		<TouchableOpacity 
-			style={styles.fab}
+			style={[styles.fab, { opacity: disabled ? 0.6 : 1 }, style]}
 			onPress={onPress}
 			disabled={disabled}
+			{...props}
 		>
-			<MaterialCommunityIcons name="pencil" size={24} color="white" />
+			{icon || <MaterialCommunityIcons name="pencil" size={24} color="white" />}
 		</TouchableOpacity>
 	)
 }

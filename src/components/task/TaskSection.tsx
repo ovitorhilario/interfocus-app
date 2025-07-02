@@ -9,15 +9,21 @@ import { isSameDay } from 'date-fns';
 export interface TaskSectionProps {
 	filter: TaskFilter;
 	selectedDate: Date;
+	multiSelectTasks: string[];
+	onLongPress: (taskId: string) => void;
+	onPress: (taskId: string) => void;
 }
 
 export function TaskSection({
 	filter,
-	selectedDate
+	selectedDate,
+	multiSelectTasks,
+	onLongPress,
+	onPress
 }: TaskSectionProps) {
-	const tasks = useTaskStore(s => s.tasks);
+	const getSortedTasks = useTaskStore(s => s.getSortedTasks);
 
-	const filteredTasks = tasks.filter(task => {
+	const filteredTasks = getSortedTasks('asc').filter(task => {
 		if (selectedDate && task.scheduledAt !== null) {
 			// If a date is selected, filter tasks by scheduledAt
 			if (!isSameDay(task.scheduledAt, selectedDate)) {
@@ -41,7 +47,15 @@ export function TaskSection({
 			<FlatList 
 				data={filteredTasks}
 				keyExtractor={(item) => item.id}
-				renderItem={({ item }) => <TaskCard task={item} />}
+				renderItem={({ item }) => (
+					<TaskCard 
+						task={item} 
+						isSelected={multiSelectTasks.includes(item.id) || false}
+						mutiSelect={multiSelectTasks.length > 0}
+						onPress={onPress}
+						onLongPress={onLongPress}
+					/>
+				)}
 				showsVerticalScrollIndicator={false}
 				contentContainerStyle={{ gap: 8 }}
 				ListEmptyComponent={() => (
@@ -56,9 +70,10 @@ export function TaskSection({
 
 const styles = StyleSheet.create((theme) => ({
 	section: {
+		marginTop: theme.gap(2),
 		paddingVertical: theme.gap(3),
 		paddingHorizontal: theme.gap(2),
-		gap: theme.gap(1)
+		gap: theme.gap(1),
 	},
 	emptyContainer: {
 		padding: theme.gap(2),

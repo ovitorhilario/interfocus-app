@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { TextInput, Modal, ScrollView, TouchableOpacity, View, Switch } from 'react-native';
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
@@ -47,13 +47,13 @@ export function CreateTaskModal({
 	const onSubmit = async () => {
 		setError('');
 
-		if (!title.trim() || title.trim().length <= 3) {
-			setError('Título deve ter pelo menos 3 caracteres');
+		if (!title.trim()) {
+			setError('Título é obrigatório');
 			return;
 		}
 
-		if (description.trim().length <= 3) {
-			setError('Descrição deve ter pelo menos 3 caracteres');
+		if (!description.trim()) {
+			setError('Descrição é obrigatória');
 			return;
 		}
 
@@ -72,8 +72,23 @@ export function CreateTaskModal({
 		onClose();
 	}
 
+	useEffect(() => {
+		const clearForm = () => {
+			setTitle('');
+			setDescription('');
+			setColorId(Constants.postItColors[0].id || 1);
+			setDate(new Date());
+			setIsScheduled(false);
+			setError('');
+		}
+		if (!open) {
+			clearForm();
+		}
+	}, [open]);
+
 	return (
-		<Modal 
+		<Modal
+			key={'create-task-modal'}
 			visible={open} 
 			animationType='fade' 
 			transparent={true}
@@ -124,6 +139,7 @@ export function CreateTaskModal({
 							placeholder='Título'
 							onSubmitEditing={() => descriptionRef?.focus()}
 							returnKeyType='next'
+							key={'title-create-task-modal'}
 						/>
 						<TextInput  
 							ref={setDescriptionRef}
@@ -132,6 +148,7 @@ export function CreateTaskModal({
 							onChangeText={setDescription}
 							numberOfLines={3}	
 							multiline
+							key={'description-create-task-modal'}
 						/>
 						{error ? (
 							<Typography style={{ color: theme.colors.error }} size='sm'>
@@ -234,13 +251,12 @@ const styles = StyleSheet.create((theme, rt) => ({
 		paddingRight: theme.gap(1),
 	},
 	backIconContainer: {
-		width: 40,
-		height: 40,
+		width: 36,
+		height: 36,
 		justifyContent: 'center',
 		alignItems: 'center',
 		borderRadius: 20,
-		borderWidth: 1,
-		borderColor: theme.colors.accent,
+		backgroundColor: theme.colors.muted
 	},
 	input: {
 		paddingHorizontal: theme.gap(2),
